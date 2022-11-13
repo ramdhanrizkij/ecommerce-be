@@ -87,7 +87,7 @@ class UserController extends Controller
             }
 
             // Check Email
-            $user = User::where('email',$request->get('email'))->exist();
+            $user = User::where('email',$request->get('email'))->first();
             if($user){
                 return ResponseFormatter::error([
                     'message'=>"Email sudah digunakan",
