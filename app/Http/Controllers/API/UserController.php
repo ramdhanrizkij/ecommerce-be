@@ -70,7 +70,6 @@ class UserController extends Controller
      */
     public function register(Request $request)
     {
-        try {
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
                 'username' => ['required', 'string', 'max:255'],
@@ -112,12 +111,6 @@ class UserController extends Controller
                 'token_type' => 'Bearer',
                 'user' => $user
             ],'User Registered');
-        } catch (Exception $error) {
-            return ResponseFormatter::error([
-                'message' => 'Something went wrong',
-                'error' => $error,
-            ],'Authentication Failed', 500);
-        }
     }
 
     public function logout(Request $request)
