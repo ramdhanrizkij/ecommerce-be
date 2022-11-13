@@ -73,10 +73,28 @@ class UserController extends Controller
         try {
             $request->validate([
                 'name' => ['required', 'string', 'max:255'],
-                'username' => ['required', 'string', 'max:255', 'unique:users'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'username' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255'],
                 'password' => ['required', 'string', new Password]
             ]);
+
+            // Check Username
+            $user = User::where('username',$request->get('username'))->exist();
+            if($user){
+                return ResponseFormatter::error([
+                    'message'=>"Username sudah digunakan",
+                    'error'=>[]
+                ],'Registration Failed', 400);
+            }
+
+            // Check Email
+            $user = User::where('email',$request->get('email'))->exist();
+            if($user){
+                return ResponseFormatter::error([
+                    'message'=>"Email sudah digunakan",
+                    'error'=>[]
+                ],'Registration Failed', 400);
+            }
 
             User::create([
                 'name' => $request->name,
