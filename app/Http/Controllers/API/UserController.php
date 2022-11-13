@@ -78,7 +78,7 @@ class UserController extends Controller
             ]);
 
             // Check Username
-            $user = User::where('username',$request->get('username'))->exist();
+            $user = User::where('username',$request->get('username'))->first();
             if($user){
                 return ResponseFormatter::error([
                     'message'=>"Username sudah digunakan",
